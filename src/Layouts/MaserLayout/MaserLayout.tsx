@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
 import Navbar from './../../Component/Navbar/Navbar';
-import React from "react";
 
 export default function MaserLayout() {
   return (
