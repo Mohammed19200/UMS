@@ -9,8 +9,18 @@ import { FaUserEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
+interface UserList {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  birthDate: string;
+  image: string;
+}
+
 export default function UserList() {
-  const [AllUsers, setAllUsers] = useState([]);
+  const [AllUsers, setAllUsers] = useState<UserList[]>([]);
   let navigate = useNavigate();
   const allUsers = async () => {
     try {
