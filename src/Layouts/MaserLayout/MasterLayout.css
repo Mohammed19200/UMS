@@ -1,3 +1,7 @@
+.div-All-Component {
+  background-color: #f8f8f8;
+}
+
 @media screen and (max-width: 767.5px) {
   .BigDivSideBar {
     display: none;

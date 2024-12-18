@@ -3,7 +3,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0rem 1rem;
+  padding: 2rem 1rem;
 }
 
 .div-Description-userList {
@@ -12,7 +12,8 @@
   flex-wrap: wrap;
   align-content: center;
   justify-content: space-between;
-  padding: 1rem;
+  padding: 2rem 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.218);
 }
 
 .button-Description-userList {
@@ -36,7 +37,7 @@
 @media screen and (max-width: 767.5px) {
   .big-Div-All-Users {
     justify-content: center;
-    padding: 0rem;
+    padding: 2rem 0rem;
   }
   .div-Description-userList {
     flex-direction: column;

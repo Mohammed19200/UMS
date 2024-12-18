@@ -7,20 +7,11 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { FaBirthdayCake } from "react-icons/fa";
 import { FaUserEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
-
-interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  birthDate: string;
-  image: string;
-}
+import { useNavigate } from "react-router-dom";
 
 export default function UserList() {
-  const [AllUsers, setAllUsers] = useState<User[]>([]);
-
+  const [AllUsers, setAllUsers] = useState([]);
+  let navigate = useNavigate();
   const allUsers = async () => {
     try {
       const response = await axios.get(`https://dummyjson.com/users`);
@@ -36,16 +27,24 @@ export default function UserList() {
 
   return (
     <div>
-      <div className="col-12 div-Description-userList">
+      <div className="col-11 m-auto div-Description-userList">
         <h4>Users List</h4>
-        <button className="button-Description-userList">ADD NEW User</button>
+        <button
+          onClick={() => {
+            navigate("/dashboard/adduser");
+          }}
+          className="button-Description-userList"
+        >
+          ADD NEW User
+        </button>
       </div>
 
-      <div className="col-12 big-Div-All-Users">
+      <div className="col-11 col-md-12 col-lg-11 m-auto big-Div-All-Users">
         {AllUsers.map((user) => {
           return (
             <div
               key={user.id}
+              style={{ boxShadow: "0px 0px 7px rgb(0 0 0 / 22%)" }}
               className="card col-10 col-sm-5 col-sm-3 col-md-3 col-lg-3 col-xl-2"
             >
               <div
@@ -106,4 +105,3 @@ export default function UserList() {
     </div>
   );
 }
-

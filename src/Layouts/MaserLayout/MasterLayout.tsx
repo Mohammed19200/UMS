@@ -11,7 +11,7 @@ export default function MasterLayout() {
         <SideBar />
       </div>
 
-      <div className="w-100">
+      <div className="w-100 div-All-Component">
         <div className="col-12 divNavBootstrap">
           <Nav />
         </div>
