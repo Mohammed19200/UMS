@@ -5,33 +5,30 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-interface UserData {
+interface User {
+  id: number;
   firstName: string;
   lastName: string;
   email: string;
-  age: number;
   phone: string;
+  age: number;
   birthDate: string;
 }
 
-interface SpecificUser {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  age?: number;
-  phone?: string;
-  birthDate?: string;
-}
+export default function UpdateUser() {
+  let navigate = useNavigate();
 
-export default function UpdateUser(): JSX.Element {
-  const navigate = useNavigate();
-  const [specficUser, setspecficUser] = useState<SpecificUser>();
-  const { updateUser } = useContext(usersProcesscontext);
-  const { id } = useParams<{ id: string }>();
+  const [specficUser, setspecficUser] = useState<User | null>(null);
 
-  const userInfo = async (): Promise<void> => {
+  let { updateUser } = useContext(usersProcesscontext) as {
+    updateUser: (data: User, id: number) => Promise<any>;
+  };
+
+  let { id } = useParams<{ id: string }>();
+
+  let userInfo = async () => {
     try {
-      const user = await axios.get(`https://dummyjson.com/users/${id}`);
+      let user = await axios.get(`https://dummyjson.com/users/${id}`);
       setspecficUser(user?.data);
     } catch (error) {
       console.log(error);
@@ -40,21 +37,29 @@ export default function UpdateUser(): JSX.Element {
 
   useEffect(() => {
     userInfo();
-  }, []);
+  }, [id]);
 
-  const {
-    register,
-    handleSubmit,
-  } = useForm<UserData>();
+  const { register, handleSubmit } = useForm<User>();
 
-  const submit: SubmitHandler<UserData> = async (dataa) => {
+  const submit: SubmitHandler<User> = async (data) => {
     try {
-      const { data } = await updateUser(dataa, id);
-      console.log(data);
-      toast.success('User Is Updated Successfully');
-      navigate('/dashboard/userslist');
+      if (!id) {
+        throw new Error("User ID is missing.");
+      }
+
+      const userId = parseInt(id, 10);
+
+      if (isNaN(userId)) {
+        throw new Error("Invalid user ID");
+      }
+
+      const { data: updatedData } = await updateUser(data, userId);
+      console.log(updatedData);
+      toast.success("User Is Updated Successfully");
+      navigate("/dashboard/userslist");
     } catch (error) {
       console.log(error);
+      toast.error("An error occurred while updating the user.");
     }
   };
 
@@ -65,7 +70,11 @@ export default function UpdateUser(): JSX.Element {
       </div>
 
       <div className="col-11 m-auto" style={{ padding: "2rem 0rem" }}>
-        <form onSubmit={handleSubmit(submit)} action="" className="Form-Add-User col-12">
+        <form
+          onSubmit={handleSubmit(submit)}
+          action=""
+          className="Form-Add-User col-12"
+        >
           <div className="col-10 col-sm-5 col-md-5 col-lg-5">
             <label
               className="label-input-form-login col-12"
@@ -77,7 +86,7 @@ export default function UpdateUser(): JSX.Element {
               className="input-form-login col-12"
               id="FirstName"
               type="text"
-              placeholder={specficUser?.firstName}
+              placeholder={specficUser?.firstName || ""}
               {...register("firstName")}
             />
           </div>
@@ -90,7 +99,7 @@ export default function UpdateUser(): JSX.Element {
               className="input-form-login col-12"
               id="LastName"
               type="text"
-              placeholder={specficUser?.lastName}
+              placeholder={specficUser?.lastName || ""}
               {...register("lastName")}
             />
           </div>
@@ -103,7 +112,7 @@ export default function UpdateUser(): JSX.Element {
               className="input-form-login col-12"
               id="Email"
               type="text"
-              placeholder={specficUser?.email}
+              placeholder={specficUser?.email || ""}
               {...register("email")}
             />
           </div>
@@ -116,7 +125,7 @@ export default function UpdateUser(): JSX.Element {
               className="input-form-login col-12"
               id="Age"
               type="number"
-              placeholder={specficUser?.age?.toString()}
+              placeholder={specficUser?.age?.toString() || ""}
               {...register("age")}
             />
           </div>
@@ -132,7 +141,7 @@ export default function UpdateUser(): JSX.Element {
               className="input-form-login col-12"
               id="PhoneNumber"
               type="tel"
-              placeholder={specficUser?.phone}
+              placeholder={specficUser?.phone || ""}
               {...register("phone")}
             />
           </div>
@@ -142,13 +151,13 @@ export default function UpdateUser(): JSX.Element {
               className="label-input-form-login col-12"
               htmlFor="birthDate"
             >
-              birth Date
+              Birth Date
             </label>
             <input
               className="input-form-login col-12"
               id="birthDate"
               type="text"
-              placeholder={specficUser?.birthDate}
+              placeholder={specficUser?.birthDate || ""}
               {...register("birthDate")}
             />
           </div>

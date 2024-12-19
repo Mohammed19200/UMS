@@ -4,32 +4,26 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 
-interface UserData {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  age?: number;
-  phone?: string;
-  birthDate?: string;
-}
-
-interface FormInputs {
+interface User {
   firstName: string;
   lastName: string;
   email: string;
-  age: number;
   phone: string;
+  age: number;
   birthDate: string;
 }
 
-export default function Profile(): JSX.Element {
-  const userId: string | null = localStorage.getItem('userId');
-  const [specficUser, setspecficUser] = useState<UserData | undefined>();
+export default function Profile() {
+  let userId = localStorage.getItem("userId");
 
-  const userInfo = async (): Promise<void> => {
+  const [specficUser, setspecficUser] = useState<User | null>(null);
+
+  let userInfo = async () => {
     try {
-      const user = await axios.get(`https://dummyjson.com/users/${userId}`);
-      setspecficUser(user?.data);
+      if (userId) {
+        let user = await axios.get(`https://dummyjson.com/users/${userId}`);
+        setspecficUser(user?.data);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -37,21 +31,20 @@ export default function Profile(): JSX.Element {
 
   useEffect(() => {
     userInfo();
-  }, []);
+  }, [userId]);
 
-  const {
-    register,
-    handleSubmit,
-  } = useForm<FormInputs>();
+  const { register, handleSubmit } = useForm<User>();
 
-  const submit: SubmitHandler<FormInputs> = async (data) => {
+  const submit: SubmitHandler<User> = async (data) => {
     try {
-      const UpdateData = await axios.put(
-        `https://dummyjson.com/users/${userId}`,
-        data
-      );
-      console.log(UpdateData);
-      toast.success('You update Your Data Successfully');
+      if (userId) {
+        const updateData = await axios.put(
+          `https://dummyjson.com/users/${userId}`,
+          data
+        );
+        console.log(updateData);
+        toast.success("You updated Your Data Successfully");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -64,7 +57,11 @@ export default function Profile(): JSX.Element {
       </div>
 
       <div className="col-11 m-auto" style={{ padding: "3rem 0rem" }}>
-        <form onSubmit={handleSubmit(submit)} action="" className="Form-Profile col-12">
+        <form
+          onSubmit={handleSubmit(submit)}
+          action=""
+          className="Form-Profile col-12"
+        >
           <div className="col-10 col-sm-5 col-md-5 col-lg-5">
             <label
               className="label-input-form-login col-12"
@@ -76,7 +73,7 @@ export default function Profile(): JSX.Element {
               className="input-form-login col-12"
               id="FirstName"
               type="text"
-              placeholder={specficUser?.firstName}
+              placeholder={specficUser?.firstName || ""}
               {...register("firstName")}
             />
           </div>
@@ -89,7 +86,7 @@ export default function Profile(): JSX.Element {
               className="input-form-login col-12"
               id="LastName"
               type="text"
-              placeholder={specficUser?.lastName}
+              placeholder={specficUser?.lastName || ""}
               {...register("lastName")}
             />
           </div>
@@ -102,7 +99,7 @@ export default function Profile(): JSX.Element {
               className="input-form-login col-12"
               id="Email"
               type="text"
-              placeholder={specficUser?.email}
+              placeholder={specficUser?.email || ""}
               {...register("email")}
             />
           </div>
@@ -115,7 +112,7 @@ export default function Profile(): JSX.Element {
               className="input-form-login col-12"
               id="Age"
               type="number"
-              placeholder={specficUser?.age?.toString()}
+              placeholder={specficUser?.age?.toString() || ""}
               {...register("age")}
             />
           </div>
@@ -131,7 +128,7 @@ export default function Profile(): JSX.Element {
               className="input-form-login col-12"
               id="PhoneNumber"
               type="tel"
-              placeholder={specficUser?.phone}
+              placeholder={specficUser?.phone || ""}
               {...register("phone")}
             />
           </div>
@@ -141,13 +138,13 @@ export default function Profile(): JSX.Element {
               className="label-input-form-login col-12"
               htmlFor="birthDate"
             >
-              birth Date
+              Birth Date
             </label>
             <input
               className="input-form-login col-12"
               id="birthDate"
               type="text"
-              placeholder={specficUser?.birthDate}
+              placeholder={specficUser?.birthDate || ""}
               {...register("birthDate")}
             />
           </div>

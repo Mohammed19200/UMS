@@ -1,14 +1,13 @@
 import { Navigate } from "react-router-dom";
-import { ReactNode } from "react";
 
 interface ProtectPathProps {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
-export default function ProtectPath({ children }: ProtectPathProps): JSX.Element {
+export default function ProtectPath({ children }: ProtectPathProps) {
   if (localStorage.getItem("userToken")) {
     return <>{children}</>;
   } else {
-    return <Navigate to={'/login'} />;
+    return <Navigate to="/login" />;
   }
 }

@@ -1,11 +1,11 @@
 import "./AddUser.css";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { usersProcesscontext } from "../../Context/AllUsers";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-interface FormInputs {
+interface IUser {
   firstName: string;
   lastName: string;
   email: string;
@@ -14,47 +14,39 @@ interface FormInputs {
   birthDate: string;
 }
 
-interface User {
-  firstName: string;
-  lastName: string;
-  email: string;
-  age: number;
-  phone: string;
-  birthDate: string;
-}
+const AddUser: React.FC = () => {
+  const getDataFromLocal = JSON.parse(localStorage.getItem("Users") || "[]");
 
-export default function AddUser(): JSX.Element {
-  const getDataFromLocal: User[] = JSON.parse(localStorage.getItem('Users') || '[]');
-  const { addUser, allUsers } = useContext(usersProcesscontext);
-  const [AllUsers, setAllUsers] = useState<User[]>([]);
-  const [newUser] = useState<User[]>([]);
+  const { addUser, allUsers }: any = useContext(usersProcesscontext);
+  const [AllUsers, setAllUsers] = useState<IUser[]>([]);
+  const [newUser, setNewUser] = useState<IUser[]>([]);
   const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormInputs>();
+  } = useForm<IUser>();
 
-  const submit: SubmitHandler<FormInputs> = async (dataa) => {
+  const submit: SubmitHandler<IUser> = async (dataa) => {
     try {
       const { data } = await addUser(dataa);
       console.log(data);
-      newUser.push(data);
-      localStorage.setItem('Users', JSON.stringify([...AllUsers, ...newUser]));
-      toast.success('User Is Added Successfully');
-      navigate('/dashboard/userslist');
+      setNewUser([data]);
+      localStorage.setItem("Users", JSON.stringify([...AllUsers, ...newUser]));
+      toast.success("User Is Added Successfully");
+      navigate("/dashboard/userslist");
     } catch (error) {
       console.log(error);
     }
   };
 
-  const getAllUsers = async (): Promise<void> => {
+  const getAllUsers = async () => {
     const { data } = await allUsers();
     if (getDataFromLocal) {
       setAllUsers(getDataFromLocal);
     } else {
-      setAllUsers(data?.users);
+      setAllUsers(data?.users || []);
     }
   };
 
@@ -69,9 +61,16 @@ export default function AddUser(): JSX.Element {
       </div>
 
       <div className="col-11 m-auto" style={{ padding: "2rem 0rem" }}>
-        <form onSubmit={handleSubmit(submit)} className="Form-Add-User col-12">
+        <form
+          onSubmit={handleSubmit(submit)}
+          action=""
+          className="Form-Add-User col-12"
+        >
           <div className="col-10 col-sm-5 col-md-5 col-lg-5">
-            <label className="label-input-form-login col-12" htmlFor="FirstName">
+            <label
+              className="label-input-form-login col-12"
+              htmlFor="FirstName"
+            >
               First Name
             </label>
             <input
@@ -135,7 +134,10 @@ export default function AddUser(): JSX.Element {
           </div>
 
           <div className="col-10 col-sm-5 col-md-5 col-lg-5">
-            <label className="label-input-form-login col-12" htmlFor="PhoneNumber">
+            <label
+              className="label-input-form-login col-12"
+              htmlFor="PhoneNumber"
+            >
               Phone Number
             </label>
             <input
@@ -151,7 +153,10 @@ export default function AddUser(): JSX.Element {
           </div>
 
           <div className="col-10 col-sm-5 col-md-5 col-lg-5">
-            <label className="label-input-form-login col-12" htmlFor="birthDate">
+            <label
+              className="label-input-form-login col-12"
+              htmlFor="birthDate"
+            >
               birth Date
             </label>
             <input
@@ -173,4 +178,6 @@ export default function AddUser(): JSX.Element {
       </div>
     </div>
   );
-}
+};
+
+export default AddUser;

@@ -1,40 +1,37 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import "./Login.css";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import React from "react";
 
-interface FormData {
+interface ILoginForm {
   username: string;
   password: string;
 }
 
-interface LoginResponse {
-  accessToken: string;
-  id: string;
-  [key: string]: any; // for other potential response fields
-}
-
-export default function Login(): JSX.Element {
+const Login: React.FC = () => {
   const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<ILoginForm>();
 
-  const submit: SubmitHandler<FormData> = async (data: FormData): Promise<void> => {
+  const submit: SubmitHandler<ILoginForm> = async (data) => {
     try {
-      const loginData: AxiosResponse<LoginResponse> = await axios.post(
+      const loginData = await axios.post(
         "https://dummyjson.com/auth/login",
         data
       );
       console.log(loginData);
-      localStorage.setItem('userToken', loginData?.data?.accessToken);
-      localStorage.setItem('userId', loginData?.data?.id);
+
+      localStorage.setItem("userToken", loginData?.data?.accessToken);
+      localStorage.setItem("userId", loginData?.data?.id);
+
       navigate("/dashboard");
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -87,4 +84,6 @@ export default function Login(): JSX.Element {
       </div>
     </div>
   );
-}
+};
+
+export default Login;

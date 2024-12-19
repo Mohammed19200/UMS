@@ -1,14 +1,14 @@
 import "./UserList.css";
 import { useContext, useEffect, useState } from "react";
-import { MdDriveFileRenameOutline } from "react-icons/md";
-import { MdEmail } from "react-icons/md";
-import { FaPhoneAlt } from "react-icons/fa";
-import { FaBirthdayCake } from "react-icons/fa";
-import { FaUserEdit } from "react-icons/fa";
-import { MdDeleteForever } from "react-icons/md";
+import {
+  MdDriveFileRenameOutline,
+  MdEmail,
+  MdDeleteForever,
+} from "react-icons/md";
+import { FaPhoneAlt, FaBirthdayCake, FaUserEdit } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { usersProcesscontext } from "../../Context/AllUsers";
-import girl from '../../assets/beautiful-girl-with-autumn-leaves-photo (3).jpg';
+import girl from "../../assets/beautiful-girl-with-autumn-leaves-photo (3).jpg";
 
 interface User {
   id: number;
@@ -20,30 +20,40 @@ interface User {
   image?: string;
 }
 
-export default function UserList(): JSX.Element {
-  const getDataFromLocal: User[] | null = JSON.parse(localStorage.getItem('Users') || 'null');
-  const [AllUsers, setAllUsers] = useState<User[]>([]);
-  const navigate = useNavigate();
-  const { allUsers } = useContext(usersProcesscontext);
+export default function UserList() {
+  const getDataFromLocal = JSON.parse(
+    localStorage.getItem("Users") || "[]"
+  ) as User[];
 
-  const getAllUsers = async (): Promise<void> => {
-    const { data } = await allUsers();
-    if (getDataFromLocal) {
-      setAllUsers(getDataFromLocal);
-    } else {
-      setAllUsers(data?.users || []);
+  const [AllUsers, setAllUsers] = useState<User[]>([]);
+
+  const navigate = useNavigate();
+
+  const { allUsers } = useContext(usersProcesscontext) as { allUsers: any };
+
+  const getAllUsers = async () => {
+    try {
+      const { data } = (await allUsers()) as { data: { users: User[] } };
+      if (getDataFromLocal.length > 0) {
+        setAllUsers(getDataFromLocal);
+      } else {
+        setAllUsers(data?.users || []);
+      }
+    } catch (error) {
+      console.error("Error fetching users:", error);
     }
   };
 
-  const DeleteUser = async (id: number): Promise<void> => {
+  // Delete user function
+  const DeleteUser = (id: number) => {
     const filterUsers = AllUsers.filter((user) => user.id !== id);
-    localStorage.setItem('Users', JSON.stringify(filterUsers));
+    localStorage.setItem("Users", JSON.stringify(filterUsers));
     setAllUsers(filterUsers);
   };
 
   useEffect(() => {
     getAllUsers();
-  }, []);
+  }, []); // Empty dependency array to run this effect only once when component mounts
 
   return (
     <div>
@@ -73,16 +83,23 @@ export default function UserList(): JSX.Element {
               {user.id}
             </div>
             <ul className="list-group list-group-flush">
-              {user.image ? (
-                <li className="list-group-item text-center">
-                  <img className="w-75" src={user.image} alt={user.firstName} />
-                </li>
-              ) : (
-                <li className="list-group-item text-center">
-                  <img className="w-75" src={girl} alt={user.firstName} />
-                </li>
-              )}
-              
+              {
+                // Check if the user has an image, otherwise, use the default image
+                user.image ? (
+                  <li className="list-group-item text-center">
+                    <img
+                      className="w-75"
+                      src={user.image}
+                      alt={user.firstName}
+                    />
+                  </li>
+                ) : (
+                  <li className="list-group-item text-center">
+                    <img className="w-75" src={girl} alt={user.firstName} />
+                  </li>
+                )
+              }
+
               <li className="list-group-item text-center">
                 <MdDriveFileRenameOutline
                   style={{ color: "#FEAF00" }}
@@ -117,15 +134,19 @@ export default function UserList(): JSX.Element {
               </li>
               <li className="list-group-item text-center">
                 <FaUserEdit
-                  onClick={() => { navigate(`/dashboard/update/${user.id}`); }}
+                  onClick={() => {
+                    navigate(`/dashboard/update/${user.id}`);
+                  }}
                   className="me-2"
-                  style={{ color: "#FEAF00", cursor: 'pointer' }}
+                  style={{ color: "#FEAF00", cursor: "pointer" }}
                   size={25}
                 />{" "}
-                <MdDeleteForever 
-                  onClick={() => { DeleteUser(user.id); }} 
-                  style={{ color: "#FEAF00", cursor: 'pointer' }} 
-                  size={25} 
+                <MdDeleteForever
+                  onClick={() => {
+                    DeleteUser(user.id);
+                  }}
+                  style={{ color: "#FEAF00", cursor: "pointer" }}
+                  size={25}
                 />
               </li>
             </ul>
