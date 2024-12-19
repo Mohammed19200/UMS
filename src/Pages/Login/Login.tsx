@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import "./Login.css";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 
 interface FormData {
@@ -8,7 +8,13 @@ interface FormData {
   password: string;
 }
 
-export default function Login() {
+interface LoginResponse {
+  accessToken: string;
+  id: string;
+  [key: string]: any; // for other potential response fields
+}
+
+export default function Login(): JSX.Element {
   const navigate = useNavigate();
 
   const {
@@ -17,13 +23,15 @@ export default function Login() {
     formState: { errors },
   } = useForm<FormData>();
 
-  const submit: SubmitHandler<FormData> = async (data) => {
+  const submit: SubmitHandler<FormData> = async (data: FormData): Promise<void> => {
     try {
-      const loginData = await axios.post(
+      const loginData: AxiosResponse<LoginResponse> = await axios.post(
         "https://dummyjson.com/auth/login",
         data
       );
       console.log(loginData);
+      localStorage.setItem('userToken', loginData?.data?.accessToken);
+      localStorage.setItem('userId', loginData?.data?.id);
       navigate("/dashboard");
     } catch (error) {
       console.log(error);
@@ -51,7 +59,7 @@ export default function Login() {
               id="userName"
               type="text"
               placeholder="Enter Your User Name"
-              {...register("username", { required: "username is required" })}
+              {...register("username", { required: "User Name Is Required" })}
             />
             {errors.username && (
               <span className="text-danger">{errors.username.message}</span>
@@ -67,7 +75,7 @@ export default function Login() {
               id="password"
               type="password"
               placeholder="Enter Your Password"
-              {...register("password", { required: "password is required" })}
+              {...register("password", { required: "Password Is Required" })}
             />
             {errors.password && (
               <span className="text-danger">{errors.password.message}</span>

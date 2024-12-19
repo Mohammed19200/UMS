@@ -8,8 +8,20 @@ import UserList from "./Pages/UserList/UserList";
 import AddUser from "./Pages/AddUser/AddUser";
 import Profile from "./Pages/Profile/Profile";
 import MasterLayout from "./Layouts/MaserLayout/MasterLayout";
+import UpdateUser from "./Pages/UpdateUser/UpdateUser";
+import { ToastContainer } from "react-toastify";
+import ProtectPath from "./ProtectPath/ProtectPath";
+import { FC, ReactElement } from 'react';
 
-const App: React.FC = () => {
+interface RouteObject {
+  path?: string;
+  element: ReactElement;
+  errorElement?: ReactElement;
+  children?: RouteObject[];
+  index?: boolean;
+}
+
+const App: FC = (): ReactElement => {
   const routers = createBrowserRouter([
     {
       path: "",
@@ -25,21 +37,22 @@ const App: React.FC = () => {
       element: <MasterLayout />,
       errorElement: <NotFound />,
       children: [
-        { index: true, element: <Home /> },
-        { path: "home", element: <Home /> },
-        { path: "userslist", element: <UserList /> },
-        { path: "adduser", element: <AddUser /> },
-        { path: "profile", element: <Profile /> },
+        { index: true, element: <ProtectPath><Home /></ProtectPath> },
+        { path: "home", element: <ProtectPath><Home /></ProtectPath> },
+        { path: "userslist", element: <ProtectPath><UserList /></ProtectPath> },
+        { path: "adduser", element: <ProtectPath><AddUser /></ProtectPath> },
+        { path: "profile", element: <ProtectPath><Profile /></ProtectPath> },
+        { path: "update/:id", element: <ProtectPath><UpdateUser /></ProtectPath> },
       ],
     },
-  ]);
+  ] as RouteObject[]);
 
   return (
     <>
-      <RouterProvider router={routers}></RouterProvider>
+      <RouterProvider router={routers} />
+      <ToastContainer />
     </>
   );
-}
+};
 
 export default App;
-

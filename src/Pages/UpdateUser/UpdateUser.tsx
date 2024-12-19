@@ -1,19 +1,11 @@
-import "./Profile.css";
 import { useForm, SubmitHandler } from "react-hook-form";
-import axios from "axios";
+import { useContext, useEffect, useState } from "react";
+import { usersProcesscontext } from "../../Context/AllUsers";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
+import axios from "axios";
 
 interface UserData {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  age?: number;
-  phone?: string;
-  birthDate?: string;
-}
-
-interface FormInputs {
   firstName: string;
   lastName: string;
   email: string;
@@ -22,13 +14,24 @@ interface FormInputs {
   birthDate: string;
 }
 
-export default function Profile(): JSX.Element {
-  const userId: string | null = localStorage.getItem('userId');
-  const [specficUser, setspecficUser] = useState<UserData | undefined>();
+interface SpecificUser {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  age?: number;
+  phone?: string;
+  birthDate?: string;
+}
+
+export default function UpdateUser(): JSX.Element {
+  const navigate = useNavigate();
+  const [specficUser, setspecficUser] = useState<SpecificUser>();
+  const { updateUser } = useContext(usersProcesscontext);
+  const { id } = useParams<{ id: string }>();
 
   const userInfo = async (): Promise<void> => {
     try {
-      const user = await axios.get(`https://dummyjson.com/users/${userId}`);
+      const user = await axios.get(`https://dummyjson.com/users/${id}`);
       setspecficUser(user?.data);
     } catch (error) {
       console.log(error);
@@ -42,16 +45,14 @@ export default function Profile(): JSX.Element {
   const {
     register,
     handleSubmit,
-  } = useForm<FormInputs>();
+  } = useForm<UserData>();
 
-  const submit: SubmitHandler<FormInputs> = async (data) => {
+  const submit: SubmitHandler<UserData> = async (dataa) => {
     try {
-      const UpdateData = await axios.put(
-        `https://dummyjson.com/users/${userId}`,
-        data
-      );
-      console.log(UpdateData);
-      toast.success('You update Your Data Successfully');
+      const { data } = await updateUser(dataa, id);
+      console.log(data);
+      toast.success('User Is Updated Successfully');
+      navigate('/dashboard/userslist');
     } catch (error) {
       console.log(error);
     }
@@ -60,11 +61,11 @@ export default function Profile(): JSX.Element {
   return (
     <div>
       <div className="col-11 m-auto div-Description-Add-User">
-        <h5>Profile</h5>
+        <h5>Update User</h5>
       </div>
 
-      <div className="col-11 m-auto" style={{ padding: "3rem 0rem" }}>
-        <form onSubmit={handleSubmit(submit)} action="" className="Form-Profile col-12">
+      <div className="col-11 m-auto" style={{ padding: "2rem 0rem" }}>
+        <form onSubmit={handleSubmit(submit)} action="" className="Form-Add-User col-12">
           <div className="col-10 col-sm-5 col-md-5 col-lg-5">
             <label
               className="label-input-form-login col-12"

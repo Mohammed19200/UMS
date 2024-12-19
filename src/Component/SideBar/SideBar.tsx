@@ -65,8 +65,9 @@ export default function SideBar() {
           Profile
         </MenuItem>
         <MenuItem
+        onClick={()=>{localStorage.removeItem('userToken');localStorage.removeItem('userId');localStorage.removeItem('Users');}}
           icon={<RiLogoutBoxFill size={25} />}
-          component={<Link to="/dashboard/profile" />}
+          component={<Link to="/login"/>}
         >
           Logout
         </MenuItem>
