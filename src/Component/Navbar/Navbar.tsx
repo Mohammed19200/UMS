@@ -1,8 +1,13 @@
 import { Link } from "react-router-dom";
 import { FaRegArrowAltCircleLeft } from "react-icons/fa";
 import { CiBellOn } from "react-icons/ci";
+import { useContext } from "react";
+import { usersProcesscontext } from "../../Context/AllUsers";
 
 export default function Navbar() {
+
+  let {setinput}=useContext(usersProcesscontext) as {setinput:any}
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -31,6 +36,9 @@ export default function Navbar() {
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
+                onKeyUp={(e) => {
+                  setinput((e.target as HTMLInputElement).value);
+                }}
               />
               <CiBellOn size={38} style={{ color: "#C4C4C4" }} />
             </form>

@@ -3,7 +3,6 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import React, { useContext, useEffect, useState } from "react";
 import { usersProcesscontext } from "../../Context/AllUsers";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 
 interface IUser {
   firstName: string;
@@ -19,8 +18,6 @@ const AddUser: React.FC = () => {
 
   const { addUser, allUsers }: any = useContext(usersProcesscontext);
   const [AllUsers, setAllUsers] = useState<IUser[]>([]);
-  const [newUser, setNewUser] = useState<IUser[]>([]);
-  const navigate = useNavigate();
 
   const {
     register,
@@ -28,25 +25,25 @@ const AddUser: React.FC = () => {
     formState: { errors },
   } = useForm<IUser>();
 
-  const submit: SubmitHandler<IUser> = async (dataa) => {
-    try {
-      const { data } = await addUser(dataa);
-      console.log(data);
-      setNewUser([data]);
-      localStorage.setItem("Users", JSON.stringify([...AllUsers, ...newUser]));
-      toast.success("User Is Added Successfully");
-      navigate("/dashboard/userslist");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const getAllUsers = async () => {
     const { data } = await allUsers();
-    if (getDataFromLocal) {
+    if (getDataFromLocal.length > 30) {
       setAllUsers(getDataFromLocal);
     } else {
       setAllUsers(data?.users || []);
+    }
+  };
+ 
+  const submit: SubmitHandler<IUser> = async (dataa) => {
+    try {
+      const { data } = await addUser(dataa);
+      console.log(data); 
+       AllUsers.push(data) 
+       console.log(AllUsers); 
+      localStorage.setItem("Users", JSON.stringify(AllUsers));
+      toast.success("User Is Added Successfully");
+    } catch (error) {
+      console.log(error);
     }
   };
 

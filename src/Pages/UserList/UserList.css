@@ -1,9 +1,8 @@
 .big-Div-All-Users {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 2rem 1rem;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  gap: 1rem !important;
+  padding: 2rem 0rem;
 }
 
 .div-Description-userList {
@@ -35,10 +34,6 @@
 }
 
 @media screen and (max-width: 767.5px) {
-  .big-Div-All-Users {
-    justify-content: center;
-    padding: 2rem 0rem;
-  }
   .div-Description-userList {
     flex-direction: column;
     align-content: center;
