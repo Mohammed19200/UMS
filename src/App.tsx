@@ -5,12 +5,10 @@ import NotFound from "./Pages/NotFound/NotFound";
 import Login from "./Pages/Login/Login";
 import Home from "./Pages/Home/Home";
 import UserList from "./Pages/UserList/UserList";
-import AddUser from "./Pages/AddUser/AddUser";
-import Profile from "./Pages/Profile/Profile";
-import UpdateUser from "./Pages/UpdateUser/UpdateUser";
 import { ToastContainer } from "react-toastify";
 import ProtectPath from "./ProtectPath/ProtectPath";
 import MasterLayout from "./Layouts/MaserLayout/MasterLayout";
+import Form from "./Pages/Form/Form";
 
 const App: React.FC = () => {
   const routers = createBrowserRouter([
@@ -53,26 +51,10 @@ const App: React.FC = () => {
           ),
         },
         {
-          path: "adduser",
+          path: "form/:page/:id?",
           element: (
             <ProtectPath>
-              <AddUser />
-            </ProtectPath>
-          ),
-        },
-        {
-          path: "profile",
-          element: (
-            <ProtectPath>
-              <Profile />
-            </ProtectPath>
-          ),
-        },
-        {
-          path: "update/:id",
-          element: (
-            <ProtectPath>
-              <UpdateUser />
+              <Form />
             </ProtectPath>
           ),
         },

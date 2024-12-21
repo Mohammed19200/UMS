@@ -33,6 +33,10 @@
   background-color: #feae00ec;
 }
 
+.card {
+  height: 525px !important;
+}
+
 @media screen and (max-width: 767.5px) {
   .div-Description-userList {
     flex-direction: column;

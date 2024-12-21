@@ -3,6 +3,7 @@ import "./Login.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import React from "react";
+import { toast } from "react-toastify";
 
 interface ILoginForm {
   username: string;
@@ -28,7 +29,13 @@ const Login: React.FC = () => {
 
       localStorage.setItem("userToken", loginData?.data?.accessToken);
       localStorage.setItem("userId", loginData?.data?.id);
-
+      localStorage.setItem(
+        "userName",
+        `${loginData?.data?.firstName} ${loginData?.data?.lastName}`
+      );
+      toast.success(
+        `Welcome ${loginData?.data?.firstName} ${loginData?.data?.lastName}`
+      );
       navigate("/dashboard");
     } catch (error) {
       console.error(error);

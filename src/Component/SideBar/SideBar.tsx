@@ -16,6 +16,7 @@ export default function SideBar() {
   let openAndCloseCollapse = () => {
     setcollapse(!collapse);
   };
+  let userName = localStorage.getItem("userName")
   return (
     <Sidebar collapsed={collapse} className="vh-100 sideebarrr">
       <div>
@@ -35,7 +36,7 @@ export default function SideBar() {
         <div className="divImgGirl text-center py-3">
           <img className="w-75 rounded-circle" src={girl} />
         </div>
-        <h6 className="text-center pb-2">Emilys Emilyspass</h6>
+        <h5 className="text-center pb-2">{userName}</h5>
         <h6 className="text-warning text-center pb-3">Admin</h6>
       </div>
 
@@ -54,18 +55,18 @@ export default function SideBar() {
         </MenuItem>
         <MenuItem
           icon={<IoPersonAddSharp size={25} />}
-          component={<Link to="/dashboard/adduser" />}
+          component={<Link to="/dashboard/form/adduser" />}
         >
           Add User
         </MenuItem>
         <MenuItem
           icon={<CgProfile size={25} />}
-          component={<Link to="/dashboard/profile" />}
+          component={<Link to="/dashboard/form/profile" />}
         >
           Profile
         </MenuItem>
         <MenuItem
-        onClick={()=>{localStorage.removeItem('userToken');localStorage.removeItem('userId');localStorage.removeItem('Users');}}
+        onClick={()=>{localStorage.removeItem('userToken');localStorage.removeItem('userId');localStorage.removeItem('Users');localStorage.removeItem('userName');}}
           icon={<RiLogoutBoxFill size={25} />}
           component={<Link to="/login"/>}
         >
