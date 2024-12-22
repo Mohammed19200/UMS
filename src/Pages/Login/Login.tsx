@@ -1,11 +1,11 @@
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import "./Login.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import { toast } from "react-toastify";
 
-interface ILoginForm {
+interface LoginForm {
   username: string;
   password: string;
 }
@@ -17,9 +17,9 @@ const Login: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ILoginForm>();
+  } = useForm<LoginForm>();
 
-  const submit: SubmitHandler<ILoginForm> = async (data) => {
+  const submit = async (data: LoginForm) => {
     try {
       const loginData = await axios.post(
         "https://dummyjson.com/auth/login",

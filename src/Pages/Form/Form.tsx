@@ -1,4 +1,4 @@
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useContext, useEffect, useState } from "react";
 import { usersProcesscontext } from "../../Context/AllUsers";
 import { useNavigate, useParams } from "react-router-dom";
@@ -52,7 +52,7 @@ export default function Form() {
     }
   };
 
-  const submitUpdateUser: SubmitHandler<User> = async (data) => {
+  const submitUpdateUser = async (data: User) => {
     try {
       if (!pagePath?.id) {
         throw new Error("User ID is missing.");
@@ -140,7 +140,7 @@ export default function Form() {
     setloading(false);
   };
 
-  const submitAddUser: SubmitHandler<User> = async (dataa) => {
+  const submitAddUser = async (dataa: User) => {
     try {
       const { data } = await addUser(dataa);
       setloading(false);
@@ -175,7 +175,7 @@ export default function Form() {
     }
   }, [pagePath.page]);
 
-  const getSubmitHandler = (): SubmitHandler<User> => {
+  const getSubmitHandler = () => {
     if (content === "adduser") {
       return submitAddUser;
     } else if (content === "updateuser") {

@@ -5,10 +5,10 @@ interface UsersContextType {
   allUsers: any;
   addUser: (data: any) => Promise<any>;
   updateUser: (data: any, id: number) => Promise<any>;
-  input:string;
-  setinput:any;
+  input: string;
+  setinput: any;
   allPosts: any;
-allTodoList: any;
+  allTodoList: any;
 }
 
 export const usersProcesscontext = createContext<UsersContextType | undefined>(
@@ -22,7 +22,6 @@ interface UsersProcessProviderProps {
 export const UsersProcessProvider = ({
   children,
 }: UsersProcessProviderProps) => {
-
   const allUsers = async () => {
     return await axios
       .get(`https://dummyjson.com/users`)
@@ -58,10 +57,20 @@ export const UsersProcessProvider = ({
       .catch((error) => error);
   };
 
-const[input,setinput]=useState('');
+  const [input, setinput] = useState("");
 
   return (
-    <usersProcesscontext.Provider value={{ allUsers, addUser, updateUser,input,setinput,allPosts,allTodoList }}>
+    <usersProcesscontext.Provider
+      value={{
+        allUsers,
+        addUser,
+        updateUser,
+        input,
+        setinput,
+        allPosts,
+        allTodoList,
+      }}
+    >
       {children}
     </usersProcesscontext.Provider>
   );
