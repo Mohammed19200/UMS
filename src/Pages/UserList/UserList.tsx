@@ -39,7 +39,7 @@ export default function UserList() {
   const getAllUsers = async () => {
     try {
       const { data } = (await allUsers()) as { data: { users: User[] } };
-      if (getDataFromLocal.length >= 30) {
+      if (getDataFromLocal.length > 0) {
         setAllUsers(getDataFromLocal);
       } else {
         setAllUsers(data?.users || []);
@@ -60,7 +60,7 @@ export default function UserList() {
 
   useEffect(() => {
     getAllUsers();
-  }, [loading]);
+  }, []);
 
   return (
     <>

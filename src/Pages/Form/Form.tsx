@@ -39,12 +39,16 @@ export default function Form() {
   const [specificUser, setSpecificUser] = useState<User | null>(null);
 
   const userInfo = async () => {
-    try {
-      let user = await axios.get(`https://dummyjson.com/users/${pagePath?.id}`);
-      setSpecificUser(user?.data);
-      setloading(false);
-    } catch (error) {
-      console.log(error);
+    if (pagePath?.id) {
+      try {
+        let user = await axios.get(
+          `https://dummyjson.com/users/${pagePath?.id}`
+        );
+        setSpecificUser(user?.data);
+        setloading(false);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -95,6 +99,8 @@ export default function Form() {
 
   const submitProfile = async (data: User) => {
     try {
+      console.log(data);
+
       if (userId) {
         const updateData = await axios.put(
           `https://dummyjson.com/users/${userId}`,
@@ -102,6 +108,7 @@ export default function Form() {
         );
         setloading(false);
         console.log(updateData?.data);
+        console.log(typeof updateData?.data?.age);
         setAllUsers((AllUsers[Number(userId) - 1] = updateData?.data));
         localStorage.setItem("Users", JSON.stringify(AllUsers));
         localStorage.setItem(
