@@ -11,12 +11,12 @@ import { FaArrowAltCircleRight } from "react-icons/fa";
 import { useState } from "react";
 
 export default function SideBar() {
-  let userImage = localStorage.getItem("userImage")
+  let userImage = localStorage.getItem("userImage");
   const [collapse, setcollapse] = useState(false);
   let openAndCloseCollapse = () => {
     setcollapse(!collapse);
   };
-  let userName = localStorage.getItem("userName")
+  let userName = localStorage.getItem("userName");
   return (
     <Sidebar collapsed={collapse} className="vh-100 sideebarrr">
       <div>
@@ -66,9 +66,14 @@ export default function SideBar() {
           Profile
         </MenuItem>
         <MenuItem
-        onClick={()=>{localStorage.removeItem('userToken');localStorage.removeItem('userId');localStorage.removeItem('Users');localStorage.removeItem('userName');}}
+          onClick={() => {
+            localStorage.removeItem("userToken");
+            localStorage.removeItem("userId");
+            localStorage.removeItem("Users");
+            localStorage.removeItem("userName");
+          }}
           icon={<RiLogoutBoxFill size={25} />}
-          component={<Link to="/login"/>}
+          component={<Link to="/login" />}
         >
           Logout
         </MenuItem>

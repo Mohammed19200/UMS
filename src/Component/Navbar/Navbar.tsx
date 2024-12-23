@@ -5,8 +5,7 @@ import { useContext } from "react";
 import { usersProcesscontext } from "../../Context/AllUsers";
 
 export default function Navbar() {
-
-  let {setinput}=useContext(usersProcesscontext) as {setinput:any}
+  let { setinput } = useContext(usersProcesscontext) as { setinput: any };
 
   return (
     <div>

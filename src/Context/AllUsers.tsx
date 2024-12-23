@@ -5,8 +5,8 @@ interface UsersContextType {
   allUsers: any;
   addUser: (data: any) => Promise<any>;
   updateUser: (data: any, id: number) => Promise<any>;
-  getUserPosts: ( id: number) => Promise<any>;
-  getUserToDoList: ( id: number) => Promise<any>;
+  getUserPosts: (id: number) => Promise<any>;
+  getUserToDoList: (id: number) => Promise<any>;
   input: string;
   setinput: any;
 }
@@ -43,14 +43,14 @@ export const UsersProcessProvider = ({
       .catch((error) => error);
   };
 
-  const getUserPosts = async ( id: number) => {
+  const getUserPosts = async (id: number) => {
     return await axios
       .get(`https://dummyjson.com/users/${id}/posts?limit=10`)
       .then((data) => data)
       .catch((error) => error);
   };
 
-  const getUserToDoList = async ( id: number) => {
+  const getUserToDoList = async (id: number) => {
     return await axios
       .get(`https://dummyjson.com/users/${id}/todos?limit=10`)
       .then((data) => data)
@@ -68,7 +68,7 @@ export const UsersProcessProvider = ({
         input,
         setinput,
         getUserPosts,
-        getUserToDoList
+        getUserToDoList,
       }}
     >
       {children}
