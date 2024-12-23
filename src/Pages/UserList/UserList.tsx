@@ -39,6 +39,7 @@ export default function UserList() {
   const getAllUsers = async () => {
     try {
       const { data } = (await allUsers()) as { data: { users: User[] } };
+      console.log(data);
       if (getDataFromLocal.length > 0) {
         setAllUsers(getDataFromLocal);
       } else {

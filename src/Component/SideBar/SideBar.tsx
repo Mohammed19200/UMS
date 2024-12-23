@@ -9,9 +9,9 @@ import { RiLogoutBoxFill } from "react-icons/ri";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
 import { FaArrowAltCircleRight } from "react-icons/fa";
 import { useState } from "react";
-import girl from "../../assets/beautiful-girl-with-autumn-leaves-photo (3).jpg";
 
 export default function SideBar() {
+  let userImage = localStorage.getItem("userImage")
   const [collapse, setcollapse] = useState(false);
   let openAndCloseCollapse = () => {
     setcollapse(!collapse);
@@ -34,7 +34,7 @@ export default function SideBar() {
           />
         )}
         <div className="divImgGirl text-center py-3">
-          <img className="w-75 rounded-circle" src={girl} />
+          <img className="w-75 rounded-circle" src={userImage || undefined} />
         </div>
         <h5 className="text-center pb-2">{userName}</h5>
         <h6 className="text-warning text-center pb-3">Admin</h6>

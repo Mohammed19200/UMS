@@ -29,6 +29,7 @@ const Login: React.FC = () => {
 
       localStorage.setItem("userToken", loginData?.data?.accessToken);
       localStorage.setItem("userId", loginData?.data?.id);
+      localStorage.setItem("userImage", loginData?.data?.image);
       localStorage.setItem(
         "userName",
         `${loginData?.data?.firstName} ${loginData?.data?.lastName}`

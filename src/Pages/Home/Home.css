@@ -1,0 +1,114 @@
+/* Posts */
+.bigest-Div-Posts{
+    display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-content: center;
+        gap: 1rem;
+        padding: 0.5rem 0rem;
+}
+
+.post-Description{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    gap: 1rem;
+    background-color: #ffffff;
+    padding: 1.2rem;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+}
+
+.div-Post-User-Image-Name{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.user-Active{
+    border-bottom: 1px solid #00000021;
+    border-top: 1px solid #00000021;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.5rem 0rem;
+}
+
+.img-Post{
+    width: 50px;
+}
+/*  */
+/*  */
+
+/* ToDoList */
+.toDoList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0.5rem 0rem;
+}
+
+.bollean-ToDoListe-complated{
+    border: 1px solid green;
+    padding: 0.4rem;
+    border-radius: 0.4rem;
+    -webkit-border-radius: 0.4rem;
+    -moz-border-radius: 0.4rem;
+    -ms-border-radius: 0.4rem;
+    -o-border-radius: 0.4rem;
+}
+.bollean-ToDoListe-notcomplated{
+    border: 1px solid red;
+    padding: 0.4rem;
+    border-radius: 0.4rem;
+    -webkit-border-radius: 0.4rem;
+    -moz-border-radius: 0.4rem;
+    -ms-border-radius: 0.4rem;
+    -o-border-radius: 0.4rem;
+}
+
+/*  */
+/*  */
+.big-Div-Buttons-Content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem 0rem;
+}
+
+.button-Style-Content{
+    border: 0;
+    outline: 0;
+    background-color:#feaf00 ;
+    padding: 0.5rem 1.5rem;
+    border-radius:0.5rem ;
+    color: #ffffff;
+    -webkit-border-radius:0.5rem ;
+    -moz-border-radius:0.5rem ;
+    -ms-border-radius:0.5rem ;
+    -o-border-radius:0.5rem ;
+}
+
+.button-Style-Content:hover{
+    background:none ;
+    border: 1px solid #feaf00 ;
+    color: black;
+}
