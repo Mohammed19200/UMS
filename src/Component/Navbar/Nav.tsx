@@ -56,7 +56,7 @@ export default function Nav() {
                 <Link
                   className="nav-link"
                   style={{ textDecoration: "none" }}
-                  to="/dashboard/adduser"
+                  to="/dashboard/form/adduser"
                 >
                   Add User
                 </Link>
@@ -65,7 +65,7 @@ export default function Nav() {
                 <Link
                   className="nav-link"
                   style={{ textDecoration: "none" }}
-                  to="/dashboard/profile"
+                  to="/dashboard/form/profile"
                 >
                   Profile
                 </Link>
