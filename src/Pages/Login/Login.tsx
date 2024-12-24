@@ -39,6 +39,7 @@ const Login: React.FC = () => {
       );
       navigate("/dashboard");
     } catch (error) {
+      toast.error("Your password or user name is not correct");
       console.error(error);
     }
   };
