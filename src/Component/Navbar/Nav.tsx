@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Nav() {
+  let navigate = useNavigate();
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -70,7 +71,18 @@ export default function Nav() {
                 </Link>
               </li>
             </ul>
-            <button type="button" className="btn btn-primary">
+            <button
+              onClick={() => {
+                localStorage.removeItem("userToken");
+                localStorage.removeItem("userId");
+                localStorage.removeItem("Users");
+                localStorage.removeItem("userName");
+                localStorage.removeItem("userImage");
+                navigate("/login");
+              }}
+              type="button"
+              className="btn btn-primary"
+            >
               Logout
             </button>
           </div>

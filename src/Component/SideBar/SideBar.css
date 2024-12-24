@@ -33,4 +33,7 @@
   .nav-Style {
     padding: 0.8rem 0.7rem !important;
   }
+  .FForm-NavBar {
+    justify-content: center !important;
+  }
 }

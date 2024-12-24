@@ -29,7 +29,7 @@ export default function Navbar() {
             className="collapse navbar-collapse"
             id="navbarSupportedContent2"
           >
-            <form className="d-flex p-3" role="search">
+            <form className="d-flex p-3 FForm-NavBar" role="search">
               <input
                 className="input-form-login input-form-Navbar me-2"
                 type="search"

@@ -71,6 +71,7 @@ export default function SideBar() {
             localStorage.removeItem("userId");
             localStorage.removeItem("Users");
             localStorage.removeItem("userName");
+            localStorage.removeItem("userImage");
           }}
           icon={<RiLogoutBoxFill size={25} />}
           component={<Link to="/login" />}
