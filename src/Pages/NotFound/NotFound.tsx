@@ -5,7 +5,7 @@ export default function NotFound() {
   let navigate = useNavigate();
 
   return (
-    <div className="col-12 bigestdivnotfound wow animate__animated animate__fadeInDownBig animate__slow">
+    <div className="col-12 bigestdivnotfound">
       <div className="bigdivnotfound"></div>
 
       <div className="col-12 divbuttonnotfound">
